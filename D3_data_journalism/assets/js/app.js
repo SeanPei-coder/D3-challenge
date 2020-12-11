@@ -155,7 +155,7 @@ function updateToolTip(chosenXAxis, chosenYAxis, elemEnter) {
 
 
 
-d3.csv("../D3-challenge/D3_data_journalism/assets/data/data.csv").then(function(givenData, err){
+d3.csv("../data/data.csv").then(function(givenData, err){
     if (err) throw err;
     console.log(givenData);
     givenData.forEach(function(data) {
