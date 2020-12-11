@@ -1,4 +1,4 @@
-
+// set up svg container size
 var svgWidth = 960;
 var svgHeight = 500;
 
@@ -16,19 +16,19 @@ var height = svgHeight - margin.top - margin.bottom;
 // and shift the latter by left and top margins.
 var svg = d3
   .select("#scatter")
-//   .classed("iframeContainer",true)
   .append("svg")
   .attr("viewBox",`0 0 960 500`)
 
 
 // Append an SVG group
 var chartGroup = svg.append("g")
-    // .classed("chart",true)
   .attr("transform", `translate(${margin.left}, ${margin.top})`);
 
+//   default axises value
 var chosenXAxis = "poverty";
 var chosenYAxis = "healthcare";
 
+// x-axis scale function
 function xScale(givenData,chosenXAxis) {
 
     var xLinearScale = d3.scaleLinear()
@@ -39,7 +39,7 @@ function xScale(givenData,chosenXAxis) {
 
 }
 
-
+// y-axis scale function
 function yScale(givenData, chosenYAxis) {
 
     var yLinearScale = d3.scaleLinear()
@@ -51,7 +51,7 @@ function yScale(givenData, chosenYAxis) {
 
 }
 
-
+// multi x-axises. when choose x-axis, return the
 function renderXAxes(newXScale, xAxis) {
 
     var bottomAxis = d3.axisBottom(newXScale);
@@ -64,7 +64,7 @@ function renderXAxes(newXScale, xAxis) {
 
 }
 
-
+// multi y-axises
 function renderYAxes(newYScale, yAxis) {
 
     var leftAxis = d3.axisLeft(newYScale);
@@ -77,7 +77,7 @@ function renderYAxes(newYScale, yAxis) {
 
 }
 
-
+// dynamic scatter circles
 function renderCircles(circlesGroup, newXScale, newYScale, chosenXAxis, chosenYAxis) {
 
     circlesGroup.transition()
@@ -89,6 +89,7 @@ function renderCircles(circlesGroup, newXScale, newYScale, chosenXAxis, chosenYA
 
 }
 
+// dynamic text inside each circle
 function renderText(textGroup, newXScale, newYScale, chosenXAxis, chosenYAxis) {
 
     textGroup.transition()
@@ -99,12 +100,13 @@ function renderText(textGroup, newXScale, newYScale, chosenXAxis, chosenYAxis) {
     return textGroup;
 
 }
-
+// tooltip 
 function updateToolTip(chosenXAxis, chosenYAxis, elemEnter) {
 
     var xlabel;
     var ylabel;
 
+    // setting labels values
     if (chosenXAxis === "poverty") {
         xlabel = "Poverty";
     }
@@ -125,7 +127,7 @@ function updateToolTip(chosenXAxis, chosenYAxis, elemEnter) {
     }
 
 
-
+    // setting toolTip
     var toolTip = d3.tip()
                 .attr("class","d3-tip")
                 .offset([80,-60])
@@ -155,10 +157,11 @@ function updateToolTip(chosenXAxis, chosenYAxis, elemEnter) {
 }
 
 
-
+// read in csv file
 d3.csv("../D3-challenge/D3_data_journalism/assets/data/data.csv").then(function(givenData, err){
     if (err) throw err;
     console.log(givenData);
+    // make sure data type is number
     givenData.forEach(function(data) {
         data.poverty = +data.poverty;
         data.age = +data.age;
@@ -187,7 +190,7 @@ d3.csv("../D3-challenge/D3_data_journalism/assets/data/data.csv").then(function(
                     .classed("y-axis",true)
                     .call(leftAxis);
 
-
+    // put circles and text in the same <div>
     var g = chartGroup.selectAll("g")
                     .data(givenData);
 
@@ -210,7 +213,7 @@ d3.csv("../D3-challenge/D3_data_journalism/assets/data/data.csv").then(function(
                         .attr("font-size","8px")
                         .text(function(d) {return d.abbr});
                                
-
+    // x-axis labels
     var xlabelsGroup = chartGroup.append("g")
                         .attr("transform", `translate(${width / 2}, ${height+20})`);
 
@@ -235,6 +238,7 @@ d3.csv("../D3-challenge/D3_data_journalism/assets/data/data.csv").then(function(
                         .classed("inactive", true)
                         .text("Household Income (Median)");
 
+    // y-axis labels
     var ylabelsGroup = chartGroup.append("g")
                                 .attr("transform", "rotate(-90)");
                         
@@ -264,7 +268,9 @@ d3.csv("../D3-challenge/D3_data_journalism/assets/data/data.csv").then(function(
 
     var elemEnter = updateToolTip(chosenXAxis, chosenYAxis, elemEnter);
     
-    
+    // event listener
+
+    // when click and choose x-axis
     xlabelsGroup.selectAll("text")
         .on("click", function() {
 
@@ -324,6 +330,7 @@ d3.csv("../D3-challenge/D3_data_journalism/assets/data/data.csv").then(function(
 
         });
 
+    // when click and choose y-axis
     ylabelsGroup.selectAll("text")
     .on("click", function() {
 
