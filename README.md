@@ -11,4 +11,4 @@ Using D3, I Created scatter plots with multip X axises and Y axises.
 
  It's a static graphic allowing users to interact with data
  
- ![](https://monash.bootcampcontent.com/monash-coding-bootcamp/monu-mel-data-pt-08-2020-u-c/-/raw/master/02-Homework/16-D3/Instructions/Images/7-animated-scatter.gif)
+ ![Alt Text](https://monash.bootcampcontent.com/monash-coding-bootcamp/monu-mel-data-pt-08-2020-u-c/-/raw/master/02-Homework/16-D3/Instructions/Images/7-animated-scatter.gif)
