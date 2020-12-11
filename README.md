@@ -9,6 +9,15 @@ The data set included is based on 2014 ACS 1-year estimates: https://factfinder.
 Using D3, I Created scatter plots with multip X axises and Y axises. 
 
 
- It's a static graphic allowing users to interact with data
+- It's a static graphic allowing users to interact with data
  
- ![Alt Text](https://monash.bootcampcontent.com/monash-coding-bootcamp/monu-mel-data-pt-08-2020-u-c/-/raw/master/02-Homework/16-D3/Instructions/Images/7-animated-scatter.gif)
+ ![Alt Text](https://github.com/SeanPei-coder/D3-challenge/blob/main/D3_data_journalism/Images/7-animated-scatter.gif)
+ 
+ 
+- with toolTip
+
+![Alt Text](https://github.com/SeanPei-coder/D3-challenge/blob/main/D3_data_journalism/Images/8-tooltip.gif)
+
+- responsive
+
+![Alt Text](https://github.com/SeanPei-coder/D3-challenge/blob/main/D3_data_journalism/Images/9-responsive-d3.gif)
