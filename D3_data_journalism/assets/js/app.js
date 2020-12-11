@@ -99,7 +99,7 @@ function renderText(textGroup, newXScale, newYScale, chosenXAxis, chosenYAxis) {
 
 }
 
-function updateToolTip(chosenXAxis, chosenYAxis, textGroup, circlesGroup) {
+function updateToolTip(chosenXAxis, chosenYAxis, elemEnter) {
 
     var xlabel;
     var ylabel;
@@ -131,53 +131,29 @@ function updateToolTip(chosenXAxis, chosenYAxis, textGroup, circlesGroup) {
                 .html(function(d) {
                     return(`${d.state}<br>${xlabel}: ${d[chosenXAxis]}<br>${ylabel}: ${d[chosenYAxis]}`);
                 });
-    // var circle = d3.select("circle");
 
-    textGroup.call(toolTip);
 
-    textGroup.on("mouseover", function(givenData) {
-        // circle.style("stroke","black"),
-        // d3.select(this)
-        //     .style("stroke","black");
+    elemEnter.call(toolTip);
+
+    elemEnter.on("mouseover", function(givenData) {
+
+        d3.select(this).select("circle")
+            .style("stroke","black");
         toolTip.show(givenData);
     })
         .on("mouseout", function(givenData,indext) {
-            // circle.style("stroke","none"),
-            // d3.select(this)
-            //     .style("stroke","none");
+
+            d3.select(this).select("circle")
+                .style("stroke","none");
             toolTip.hide(givenData);
         });
     
-    // circlesGroup.on("mouseover", function() {
-    //     toolTip.style("stroke","black");
-    // })
-    //     .on("mouseout", function() {
-    //         toolTip.style("stroke","none");
-    //     });
 
-    return textGroup;
+    return elemEnter;
 
 }
 
-function updateToolTip2(circlesGroup,textGroup) {
 
-    var toolTip2 = d3.tip()
-                    .attr("class","d3-tip")
-                    .attr("stroke","black");
-                
-    circlesGroup.call(toolTip2);
-
-    circlesGroup.on("mouseover", function() {
-        d3.select(this)
-            .style("stroke","black");
-    })
-        .on("mouseout", function() {
-            d3.select(this)
-                .style("stroke","none");
-        });
-    
-    return circlesGroup;
-}
 
 d3.csv("../D3_data_journalism/assets/data/data.csv").then(function(givenData, err){
     if (err) throw err;
@@ -234,7 +210,7 @@ d3.csv("../D3_data_journalism/assets/data/data.csv").then(function(givenData, er
                         .text(function(d) {return d.abbr});
                                
 
-    var xlabelsGroup = elemEnter.append("g")
+    var xlabelsGroup = chartGroup.append("g")
                         .attr("transform", `translate(${width / 2}, ${height+20})`);
 
     var povertyLabel = xlabelsGroup.append("text")
@@ -258,7 +234,7 @@ d3.csv("../D3_data_journalism/assets/data/data.csv").then(function(givenData, er
                         .classed("inactive", true)
                         .text("Household Income (Median)");
 
-    var ylabelsGroup = elemEnter.append("g")
+    var ylabelsGroup = chartGroup.append("g")
                                 .attr("transform", "rotate(-90)");
                         
 
@@ -285,8 +261,8 @@ d3.csv("../D3_data_journalism/assets/data/data.csv").then(function(givenData, er
                             .text("Obese (%)");
 
 
-    var textGroup = updateToolTip(chosenXAxis, chosenYAxis, textGroup, circlesGroup);
-    var circlesGroup = updateToolTip2(circlesGroup,textGroup);
+    var elemEnter = updateToolTip(chosenXAxis, chosenYAxis, elemEnter);
+    
     
     xlabelsGroup.selectAll("text")
         .on("click", function() {
@@ -299,13 +275,9 @@ d3.csv("../D3_data_journalism/assets/data/data.csv").then(function(givenData, er
 
                 xAxis = renderXAxes(xLinearScale, xAxis);
 
-                circlesGroup = updateToolTip2(circlesGroup,textGroup);
-
                 circlesGroup = renderCircles(circlesGroup, xLinearScale,yLinearScale, chosenXAxis, chosenYAxis);
 
-                // circlesGroup = updateToolTip2(circlesGroup,textGroup);
-
-                textGroup = updateToolTip(chosenXAxis, chosenYAxis, textGroup, circlesGroup);
+                elemEnter = updateToolTip(chosenXAxis, chosenYAxis, elemEnter);
 
                 textGroup = renderText(textGroup,xLinearScale,yLinearScale,chosenXAxis, chosenYAxis);
 
@@ -362,13 +334,9 @@ d3.csv("../D3_data_journalism/assets/data/data.csv").then(function(givenData, er
 
             yAxis = renderYAxes(yLinearScale, yAxis);
 
-            circlesGroup = updateToolTip2(circlesGroup,textGroup);
-
             circlesGroup = renderCircles(circlesGroup, xLinearScale,yLinearScale, chosenXAxis, chosenYAxis);
 
-            // circlesGroup = updateToolTip2(circlesGroup,textGroup);
-
-            textGroup = updateToolTip(chosenXAxis, chosenYAxis, textGroup, circlesGroup);
+            elemEnter = updateToolTip(chosenXAxis, chosenYAxis, elemEnter);
 
             textGroup = renderText(textGroup,xLinearScale,yLinearScale,chosenXAxis, chosenYAxis);
 
