@@ -137,19 +137,23 @@ function updateToolTip(chosenXAxis, chosenYAxis, textGroup, circlesGroup) {
 
     textGroup.on("mouseover", function(givenData) {
         // circle.style("stroke","black"),
+        // d3.select(this)
+        //     .style("stroke","black");
         toolTip.show(givenData);
     })
         .on("mouseout", function(givenData,indext) {
             // circle.style("stroke","none"),
+            // d3.select(this)
+            //     .style("stroke","none");
             toolTip.hide(givenData);
         });
     
-    circlesGroup.on("mouseover", function() {
-        toolTip.style("stroke","black");
-    })
-        .on("mouseout", function() {
-            toolTip.style("stroke","none");
-        });
+    // circlesGroup.on("mouseover", function() {
+    //     toolTip.style("stroke","black");
+    // })
+    //     .on("mouseout", function() {
+    //         toolTip.style("stroke","none");
+    //     });
 
     return textGroup;
 
@@ -163,11 +167,13 @@ function updateToolTip2(circlesGroup,textGroup) {
                 
     circlesGroup.call(toolTip2);
 
-    textGroup.on("mouseover", function() {
-        toolTip2.style("stroke","black");
+    circlesGroup.on("mouseover", function() {
+        d3.select(this)
+            .style("stroke","black");
     })
         .on("mouseout", function() {
-            toolTip2.style("stroke","none");
+            d3.select(this)
+                .style("stroke","none");
         });
     
     return circlesGroup;
