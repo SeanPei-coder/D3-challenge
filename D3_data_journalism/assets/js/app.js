@@ -16,13 +16,14 @@ var height = svgHeight - margin.top - margin.bottom;
 // and shift the latter by left and top margins.
 var svg = d3
   .select("#scatter")
-  .classed("chart",true)
+//   .classed("iframeContainer",true)
   .append("svg")
-  .attr("width", svgWidth)
-  .attr("height", svgHeight);
+  .attr("viewBox",`0 0 960 500`)
+
 
 // Append an SVG group
 var chartGroup = svg.append("g")
+    // .classed("chart",true)
   .attr("transform", `translate(${margin.left}, ${margin.top})`);
 
 var chosenXAxis = "poverty";
